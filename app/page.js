@@ -7,11 +7,10 @@ import { CertificationsSection } from "@/components/sections/CertificationsSecti
 import { ContactSection } from "@/components/sections/ContactSection";
 import { ScrollToOnLoad } from "@/components/shared/ScrollToOnLoad";
 
-export default function Home({ searchParams }) {
-  const section = searchParams?.section;
+export default function Home() {
   return (
     <div className="relative">
-      <ScrollToOnLoad id={section} />
+      <ScrollToOnLoad />
       <HeroSection />
       <AboutSection />
       <ExperienceSection />
