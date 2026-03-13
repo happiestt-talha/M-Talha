@@ -27,7 +27,7 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: "/og.png",
+        url: "/og.svg",
         width: 1200,
         height: 630,
         alt: "M Talha Manzoor — Portfolio",
@@ -39,7 +39,7 @@ export const metadata = {
     title: "M Talha Manzoor — Full-Stack Developer",
     description:
       "Premium, performant web experiences — from pixel-perfect frontends to robust full-stack architectures.",
-    images: ["/og.png"],
+    images: ["/og.svg"],
   },
 };
 
