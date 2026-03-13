@@ -81,6 +81,13 @@
   }
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .has-custom-cursor,
+  .has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
