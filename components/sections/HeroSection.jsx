@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { Spotlight } from "@/components/ui/spotlight";
@@ -24,9 +25,22 @@ export function HeroSection() {
       className="section-divider relative min-h-[100svh] overflow-hidden pt-28 md:pt-32"
       aria-label="Hero"
     >
-      <div className="absolute inset-0 -z-10">
+      {/* Background image layer — z-0 */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/bg.png"
+          fill
+          style={{ objectFit: "cover" }}
+          className="opacity-40"
+          alt=""
+          priority
+        />
+      </div>
+
+      {/* Sparkles + gradient overlay — z-[1] */}
+      <div className="absolute inset-0 z-[1]">
         <Sparkles
-          background="#0A0A0F"
+          background="transparent"
           minSize={0.4}
           maxSize={1.6}
           particleDensity={90}
@@ -42,7 +56,8 @@ export function HeroSection() {
         fill="rgba(201,168,76,0.55)"
       />
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      {/* Content layer — z-[2] */}
+      <div className="relative z-[2] mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="relative grid items-center gap-10 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <motion.div
@@ -182,6 +197,7 @@ deploy: vercel --prod`}
       </div>
 
       <motion.button
+        style={{ zIndex: 2 }}
         type="button"
         aria-label="Scroll down"
         onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}

@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
-import { GlareCard } from "@/components/ui/glare-card";
 import { SectionLabel } from "@/components/shared/SectionLabel";
 import { about } from "@/lib/content";
 
@@ -100,40 +100,36 @@ export function AboutSection() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <GlareCard className="h-[360px] w-full rounded-3xl border border-[#1E1E2E] bg-gradient-to-b from-[#111118]/80 to-[#0A0A0F]/70">
-                <div className="flex h-full flex-col justify-between p-7">
-                  <div className="text-xs font-mono tracking-[0.22em] text-muted-foreground">
-                    profile.system
-                  </div>
-                  <div>
-                    <div className="text-xl font-semibold tracking-tight text-foreground">
-                      {`{ developer: "full-stack", focus: "premium UX" }`}
-                    </div>
-                    <div className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                      Glass + glow aesthetics, motion-driven UI, and clean architecture —
-                      engineered for production.
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {[
-                      "Next.js",
-                      "React",
-                      "Node.js",
-                      "MongoDB",
-                      "PostgreSQL",
-                      "GraphQL",
-                      "Tailwind",
-                    ].map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-[#1E1E2E] bg-white/5 px-3 py-1 text-xs text-foreground/90"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </GlareCard>
+              {/* Headshot photo with gold border & glow */}
+              <div className="overflow-hidden rounded-2xl border border-[#C9A84C]/20 shadow-[0_0_40px_rgba(201,168,76,0.15)] transition-transform hover:scale-[1.02]">
+                <Image
+                  src="/images/headshot.png"
+                  width={480}
+                  height={480}
+                  alt="M Talha Manzoor — Full Stack Developer"
+                  className="rounded-2xl object-cover"
+                />
+              </div>
+
+              {/* Floating tech badges */}
+              <div className="mt-5 flex flex-wrap justify-center gap-2">
+                {[
+                  "Next.js",
+                  "React",
+                  "Node.js",
+                  "MongoDB",
+                  "PostgreSQL",
+                  "GraphQL",
+                  "Tailwind",
+                ].map((t) => (
+                  <span
+                    key={t}
+                    className="rounded-full border border-[#1E1E2E] bg-white/5 px-3 py-1 text-xs text-foreground/90"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
 
               <div className="pointer-events-none absolute -inset-8 -z-10 bg-[radial-gradient(ellipse_at_center,rgba(201,168,76,0.10),transparent_55%)]" />
             </motion.div>
