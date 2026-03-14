@@ -7,7 +7,7 @@ import {
   useMotionValue,
   useTransform,
 } from "motion/react";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
 export function Button({
@@ -64,17 +64,56 @@ export const MovingBorder = ({
 }) => {
   const pathRef = useRef();
   const progress = useMotionValue(0);
+  const [pathLength, setPathLength] = useState(0);
+
+  // Wait for the path to be ready before starting animation
+  useEffect(() => {
+    if (pathRef.current) {
+      // Use requestAnimationFrame to ensure the element is fully rendered
+      const updatePathLength = () => {
+        try {
+          const length = pathRef.current?.getTotalLength();
+          if (length && length > 0) {
+            setPathLength(length);
+          }
+        } catch (error) {
+          console.warn("Path length calculation failed:", error);
+        }
+      };
+
+      // Wait for next frame to ensure SVG is rendered
+      requestAnimationFrame(updatePathLength);
+
+      // Also listen for resize events (mobile orientation changes)
+      window.addEventListener("resize", updatePathLength);
+      return () => window.removeEventListener("resize", updatePathLength);
+    }
+  }, []);
 
   useAnimationFrame((time) => {
-    const length = pathRef.current?.getTotalLength();
-    if (length) {
-      const pxPerMillisecond = length / duration;
-      progress.set((time * pxPerMillisecond) % length);
+    if (pathLength) {
+      const pxPerMillisecond = pathLength / duration;
+      progress.set((time * pxPerMillisecond) % pathLength);
     }
   });
 
-  const x = useTransform(progress, (val) => pathRef.current?.getPointAtLength(val).x);
-  const y = useTransform(progress, (val) => pathRef.current?.getPointAtLength(val).y);
+  const x = useTransform(progress, (val) => {
+    if (!pathRef.current || pathLength === 0) return 0;
+    try {
+      return pathRef.current.getPointAtLength(val).x;
+    } catch {
+      return 0;
+    }
+  });
+
+  const y = useTransform(progress, (val) => {
+    if (!pathRef.current || pathLength === 0) return 0;
+    try {
+      return pathRef.current.getPointAtLength(val).y;
+    } catch {
+      return 0;
+    }
+  });
 
   const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
 
