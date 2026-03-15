@@ -151,9 +151,9 @@ export default async function ProjectPage({ params }) {
                   <ExternalLink className="h-4 w-4 text-muted-foreground" />
                 </a>
               </div>
-              <p className="mt-4 text-xs text-muted-foreground">
+              {/* <p className="mt-4 text-xs text-muted-foreground">
                 Add real links in <code className="font-mono">lib/content.js</code>.
-              </p>
+              </p> */}
             </div>
           </aside>
         </div>
