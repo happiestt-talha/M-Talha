@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Download, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button as MovingBorderButton } from "@/components/ui/moving-border";
+import Image from "next/image";
 
 const NAV = [
   { id: "home", label: "Home" },
@@ -80,9 +81,16 @@ export function Navbar() {
                 }}
               >
                 <span className="grid h-10 w-10 place-items-center rounded-xl border border-[#C9A84C]/25 bg-[#0A0A0F]/50 shadow-[0_0_18px_rgba(201,168,76,0.18)]">
-                  <span className="font-semibold tracking-tight text-[#C9A84C]">
+                  {/* <span className="font-semibold tracking-tight text-[#C9A84C]">
                     TM
-                  </span>
+                  </span> */}
+                  <Image
+                    src="/images/talha.png"
+                    alt="Logo"
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
                 </span>
                 <span className="hidden sm:block">
                   <span className="block text-sm font-semibold tracking-tight text-foreground">

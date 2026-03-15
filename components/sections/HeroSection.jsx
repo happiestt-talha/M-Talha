@@ -15,7 +15,10 @@ const Sparkles = dynamic(
 );
 
 function splitWords(text) {
-  return text.split(" ").map((w) => ({ text: w }));
+  const words = text.split(" ");
+  return words.map((w, i) => ({
+    text: i < words.length - 1 ? w + " " : w  // Add space except for last word
+  }));
 }
 
 export function HeroSection() {
@@ -183,7 +186,7 @@ export function HeroSection() {
                   </div>
                 </div>
                 <pre className="mt-4 whitespace-pre-wrap font-mono text-xs leading-relaxed text-foreground/85">
-{`> npm run build
+                  {`> npm run build
 ✓ optimized bundles
 ✓ image pipeline ready
 ✓ SEO metadata generated

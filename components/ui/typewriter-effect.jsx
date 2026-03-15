@@ -105,6 +105,7 @@ export const TypewriterEffectSmooth = ({
                   {char}
                 </span>
               ))}
+              {idx < wordsArray.length - 1 && <span>&nbsp;</span>}
             </div>
           );
         })}
