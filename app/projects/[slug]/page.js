@@ -44,14 +44,23 @@ export default async function ProjectPage({ params }) {
 
         <div className="mt-8 overflow-hidden rounded-3xl border border-[#1E1E2E] bg-black/20">
           <div className="relative aspect-[21/9] w-full">
-            <Image
+            {project.image ? <Image
               src={project.image}
               alt={project.name}
               fill
               className="object-cover"
               sizes="100vw"
               priority
+            /> : project.video && <video
+              src={project.video}
+              autoPlay
+              loop
+              muted
+              className="object-cover"
+              sizes="100vw"
+              priority
             />
+            }
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(123,97,255,0.18),transparent_55%),linear-gradient(to_top,rgba(10,10,15,0.75),transparent)]" />
           </div>
         </div>

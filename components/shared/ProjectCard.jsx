@@ -76,14 +76,23 @@ export function ProjectCard({ project, variant = "default" }) {
 
           <div className="mt-6 overflow-hidden rounded-2xl border border-[#1E1E2E] bg-black/20">
             <div className="relative aspect-[16/9] w-full">
-              <Image
-                src={project.image}
-                alt={project.name}
-                fill
+              {project.video ? <video
+                src={project.video}
+                autoPlay loop muted
                 className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                sizes={isFeatured ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"}
-                priority={Boolean(project.featured)}
+                controls
+                width={isFeatured ? 666 : 33}
+                height={isFeatured ? 36 : 16}
+
               />
+                : <Image
+                  src={project.image}
+                  alt={project.name}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                  sizes={isFeatured ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"}
+                  priority={Boolean(project.featured)}
+                />}
               <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/70 via-transparent to-transparent opacity-90" />
             </div>
           </div>
