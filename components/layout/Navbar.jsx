@@ -232,12 +232,12 @@ export function Navbar() {
             Download CV
           </a>
 
-          <div className="mt-6 text-xs text-muted-foreground">
+          {/* <div className="mt-6 text-xs text-muted-foreground">
             Tip: Add your CV at{" "}
             <code className="font-mono text-foreground/90">
               public/resume/M_Talha_Manzoor_CV.pdf
             </code>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
