@@ -119,7 +119,7 @@ export function HeroSection() {
               className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
             >
               I engineer scalable web experiences — from pixel-perfect frontends
-              to robust full-stack architectures.
+              to robust full stack architectures.
             </motion.p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">

@@ -31,8 +31,31 @@ export default async function ProjectPage({ params }) {
 
   const nextSlug = getNextProjectSlug(project.slug);
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://mtalha.me',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: project.name,
+        item: `https://mtalha.me/projects/${project.slug}`,
+      },
+    ],
+  };
+
   return (
     <div className="min-h-[100svh] pt-28 md:pt-32 pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <Link
           href="/?section=projects"
