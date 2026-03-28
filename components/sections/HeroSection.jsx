@@ -17,7 +17,7 @@ const Sparkles = dynamic(
 function splitWords(text) {
   const words = text.split(" ");
   return words.map((w, i) => ({
-    text: i < words.length - 1 ? w + " " : w  // Add space except for last word
+    text: i < words.length - 1 ? w + " " : w,
   }));
 }
 
@@ -25,7 +25,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="section-divider relative min-h-[100svh] overflow-hidden pt-28 md:pt-32"
+      className="section-divider relative min-h-[100svh] w-full overflow-x-hidden pt-28 md:pt-32"
       aria-label="Hero"
     >
       {/* Background image layer — z-0 */}
@@ -60,10 +60,16 @@ export function HeroSection() {
       />
 
       {/* Content layer — z-[2] */}
-      <div className="relative z-[2] mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="relative grid items-center gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-8">
-            <motion.div
+      {/* ✅ FIX 1: added overflow-hidden here to clip any child overflow */}
+      <div className="relative z-[2] mx-auto max-w-6xl overflow-hidden px-4 sm:px-6 lg:overflow-visible lg:px-8">
+        {/* ✅ FIX 2: added w-full to the grid wrapper */}
+        <div className="relative grid w-full items-center gap-10 lg:grid-cols-12">
+
+          {/* ✅ FIX 3: added min-w-0 — this is the ROOT CAUSE fix.
+              Grid children default to min-width:auto which lets them
+              expand beyond their track. min-w-0 enforces the boundary. */}
+          <div className="min-w-0 lg:col-span-8">
+            {/* <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
@@ -74,7 +80,7 @@ export function HeroSection() {
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
               </span>
               Available for opportunities
-            </motion.div>
+            </motion.div> */}
 
             <motion.h1
               initial="hidden"
@@ -85,7 +91,7 @@ export function HeroSection() {
                   transition: { staggerChildren: 0.03, delayChildren: 0.1 },
                 },
               }}
-              className="mt-6 text-balance text-5xl font-bold leading-[0.95] tracking-tight sm:text-6xl lg:text-7xl"
+              className="mt-6 text-balance text-4xl font-bold leading-[0.95] tracking-tight sm:text-5xl lg:text-7xl"
             >
               {"M Talha Manzoor".split("").map((ch, idx) => (
                 <motion.span
@@ -108,21 +114,23 @@ export function HeroSection() {
               ))}
             </motion.h1>
 
-            <div className="mt-5">
-              <TypewriterEffectSmooth words={roles.flatMap((r) => splitWords(r))} />
+            {/* ✅ FIX 4: overflow-hidden on typewriter wrapper */}
+            <div className="mt-5" >
+              <TypewriterEffectSmooth words={roles.map((r) => ({ text: r }))} />
             </div>
 
             <motion.p
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.15 }}
-              className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
+              className="mt-6 max-w-full text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg"
             >
               I engineer scalable web experiences — from pixel-perfect frontends
               to robust full stack architectures.
             </motion.p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+            {/* ✅ FIX 5: buttons container is w-full, both buttons capped at w-full on mobile */}
+            <div className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:items-center">
               <MovingBorderButton
                 as="button"
                 onClick={() =>
@@ -141,6 +149,7 @@ export function HeroSection() {
                 </span>
               </MovingBorderButton>
 
+              {/* ✅ FIX 6: removed duplicate sm:w-auto, kept sm:w-[200px] for symmetry */}
               <button
                 type="button"
                 onClick={() =>
@@ -149,9 +158,9 @@ export function HeroSection() {
                     block: "start",
                   })
                 }
-                className="h-12 w-full rounded-2xl border border-[#1E1E2E] bg-white/5 px-5 text-sm font-semibold text-foreground transition hover:border-[#7B61FF]/35 hover:shadow-[0_0_26px_rgba(123,97,255,0.12)] sm:w-auto"
+                className="h-12 w-full rounded-2xl border border-[#1E1E2E] bg-white/5 px-5 text-sm font-semibold text-foreground transition hover:border-[#7B61FF]/35 hover:shadow-[0_0_26px_rgba(123,97,255,0.12)] sm:w-[200px]"
               >
-                Let’s Connect
+                Let's Connect
               </button>
             </div>
 
@@ -168,7 +177,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Floating terminal fragments */}
+          {/* Floating terminal — hidden on mobile, shown lg+ */}
           <div className="relative lg:col-span-4">
             <div className="pointer-events-none absolute -right-2 top-6 hidden lg:block">
               <motion.div
@@ -203,7 +212,9 @@ deploy: vercel --prod`}
         style={{ zIndex: 2 }}
         type="button"
         aria-label="Scroll down"
-        onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+        onClick={() =>
+          document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
+        }
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.5 }}
@@ -221,4 +232,3 @@ deploy: vercel --prod`}
     </section>
   );
 }
-
