@@ -42,10 +42,9 @@ export const metadata = {
   authors: [{ name: "M Talha Manzoor", url: "https://mtalha.me" }],
   creator: "M Talha Manzoor",
 
-  // Add this after you set up Google Search Console
-  // verification: {
-  //   google: 'your-google-verification-code-here',
-  // },
+  verification: {
+    google: 'TB3RfCgcgKUd70asMKVmvfZmwplqNsBgSqsDGOYAVy4',
+  },
 
   robots: {
     index: true,
@@ -65,6 +64,10 @@ export const metadata = {
       { url: '/favicon.svg', type: 'image/svg+xml' }
     ],
     apple: '/apple-touch-icon.svg',
+  },
+
+  alternates: {
+    canonical: 'https://mtalha.me',
   },
 
   openGraph: {
@@ -104,7 +107,6 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
-  // Structured data for rich snippets in search results
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -137,18 +139,40 @@ export default function RootLayout({ children }) {
       'https://www.linkedin.com/in/mt4lha/',
       'https://twitter.com/MTalha215',
     ],
+    gender: 'Male',
+    nationality: {
+      '@type': 'Country',
+      name: 'Pakistan',
+    },
+  };
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'M Talha Manzoor',
+    url: 'https://mtalha.me',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://mtalha.me/?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
   };
 
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body
-        className={`${geistSans.variable} ${jetBrainsMono.variable} noise-overlay antialiased`}
-      >
-        {/* Structured Data for SEO */}
+      <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+      </head>
+      <body
+        className={`${geistSans.variable} ${jetBrainsMono.variable} noise-overlay antialiased`}
+      >
 
         <AppShell>{children}</AppShell>
       </body>
