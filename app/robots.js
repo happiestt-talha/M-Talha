@@ -3,7 +3,7 @@ export default function robots() {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: '/api/', // Block API routes from indexing
+            disallow: ['/api/', '/admin/', '/ai/', '/chat/', '/webhook/'],
         },
         sitemap: 'https://mtalha.me/sitemap.xml',
     };
